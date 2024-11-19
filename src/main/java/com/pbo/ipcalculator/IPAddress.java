@@ -188,7 +188,25 @@ public class IPAddress {
             ipEfektif = totalIP;
         }
         return (int) ipEfektif;
-}
+    }
+
+    public int getIPEfektifString() {
+        boolean isFullMask = true; 
+        for (int i = 0; i < netMask.size(); i++) { 
+            if (netMask.get(i).getValue() != 255) { 
+                isFullMask = false; break; } 
+        }
+        
+        if (isFullMask) { 
+            return 0;
+        } 
+        
+        int netID = ipNumber.get(3).getValue() & netMask.get(3).getValue();
+        int wildcardMask = ~netMask.get(3).getValue() & 0xFF; 
+        int bcast = ipNumber.get(3).getValue() | wildcardMask; 
+        
+        return bcast - netID -1;
+    }
     
     public String getNetmask() {
         StringBuilder sb = new StringBuilder();

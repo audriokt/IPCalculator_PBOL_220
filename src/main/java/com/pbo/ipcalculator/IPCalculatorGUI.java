@@ -160,18 +160,20 @@ public class IPCalculatorGUI extends JFrame {
             IPAddress ipAddress = new IPAddress(ipParts[0], ipParts[1], ipParts[2], ipParts[3]);
             
             // Parse netmask
+            long IPEfektif;
             String netmaskText = netmaskField.getText();
             if (netmaskText.contains(".")) {
                 ipAddress.setNetMask(netmaskText);
+                IPEfektif = ipAddress.getIPEfektifString();
             } else {
                 ipAddress.setPrefiks(Integer.parseInt(netmaskText));
                 ipAddress.setNetMask(Integer.parseInt(netmaskText));
+                IPEfektif = ipAddress.getIPEfektif();
             }
-            
+             
             // Calculate results
             IPAddress networkId = ipAddress.getNetworkID();
             IPAddress broadcast = ipAddress.getBroadcast();
-            long IPEfektif = ipAddress.getIPEfektif();
             
             // Add results to panel
             addResultRow("Address", ipAddress.toString(), ipAddress.toStringBiner());
